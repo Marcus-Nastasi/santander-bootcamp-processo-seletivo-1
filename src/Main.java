@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
@@ -14,6 +12,7 @@ public class Main {
 
         analisarCandidato(salarioPretendido);
         selecionaCandidatos();
+        ligarCandidatos();
 
         sc.close();
     }
@@ -57,8 +56,32 @@ public class Main {
         sc.close();
     }
 
+    public static void ligarCandidatos() {
+        String[] candidatos = {"Marcus", "Julia", "Milena", "Juberto", "Ana", "Stella", "Maria"};
+        for(String c: candidatos) {
+            int tentativas = 1;
+            boolean continuarTentando = true;
+            boolean atendeu = false;
+
+            do {
+                atendeu = atender();
+                continuarTentando = !atendeu;
+
+                if (continuarTentando) tentativas++;
+                else System.out.println("CONTATO REALIZADO COM SUCESSO");
+            } while (continuarTentando && tentativas < 3);
+
+            if (atendeu) System.out.println("CONSEGUIMOS CONTATO COM O CANDIDATO " + c);
+            else System.out.println("NÃO CONSEGUIMOS CONTATO COM NENHUM CANDIDATO");
+        }
+    }
+
     static double valorPretendido() {
         return ThreadLocalRandom.current().nextDouble(1800, 2200);
+    }
+
+    static boolean atender() {
+        return new Random().nextInt(3) == 1;
     }
 }
 
